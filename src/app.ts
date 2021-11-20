@@ -1,6 +1,9 @@
+import { QuizConfiguration } from './quiz/config/QuizConfiguration';
 import { Answer } from './quiz/core/model/Answer';
 import { Question } from './quiz/core/model/Question';
 import { Quiz } from './quiz/core/model/Quiz'
+import { QuizController } from './quiz/core/ports/QuizController';
+import { SummaryController } from './quiz/core/ports/SummaryController';
 
 
 /* HTML DOM objects */
@@ -23,16 +26,20 @@ let disbaledClassName: string = "disabled";
 let activeClassName: string = "accent"; 
 
 /* Quiz */
-let quiz: Quiz = new Quiz();
-quiz.init(timerNode);
+let conf = new QuizConfiguration();
+
+let quiz: QuizController = conf.createQuizController();
+let summary: SummaryController = conf.createSummaryController();
+quiz.setTimeNode(timerNode)
+quiz.init();
 
 
-displayQuestion(quiz.getQuestion());
+displayQuestion(quiz.getQuestion(0));
 
 function displayQuestion(question: Question){
-    showQuestionNumber(question.id, quiz.totalQuestions);
+    showQuestionNumber(question.id, quiz.getTotalQuestions());
     showQuestion(question.question)
-    showUserAnswer(quiz.getUserAnswer())
+    showUserAnswer(quiz.getCurrentAnswer())
 }
 
 function showQuestionNumber(id: number, total: number){
@@ -60,7 +67,10 @@ function onNext(){
 }
 
 function onFinish() {
+    quiz.finishQuiz();
+    console.log(summary.getFinalScore());
     window.open("summary.html", "_self");
+    
 }
 
 function onAnswerTyped(){

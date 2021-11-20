@@ -1,73 +1,70 @@
 import { Question } from './Question'
-import * as jsonFile from '../../../files/questions.json'
+
 import { Answer } from './Answer';
-import { TimeCounter } from '../TimeCounter';
+import { TimeCounter } from '../../adapters/TimeCounter';
 import { Score } from './Score';
-import { QuizControler } from '../ports/QuizController';
+import { QuizController } from '../ports/QuizController';
+import { Timer } from '../ports/Timer';
+import { QuestionRepository } from '../ports/QuestionRepository';
+import { ScoreRepository } from '../ports/ScoreRepository';
 
 
-export class Quiz implements QuizControler{
+export class Quiz implements QuizController{
     private questions: Question[] = new Array();
     private answers: Answer[] = new Array();
-    private timer: TimeCounter = new TimeCounter();
-    private answerTimer: TimeCounter = new TimeCounter();
-    public points: number = 0;
-    public currentQuestionIndex: number = 0;
-    public totalQuestions: number = 0;
+    private currentQuestionIndex: number = 0;
+    private totalQuestions: number = 0;
 
-    init = (timerNode?: HTMLElement) => {
-        this.loadQuestions()
-        if (timerNode) this.timer.setDOMElement(timerNode);
+    constructor(
+       private timer: Timer,
+       private answerTimer: Timer,
+       private questionRepository: QuestionRepository,
+       private scoreRepository: ScoreRepository
+    ) {}
+
+    init = () => {
+        this._loadQuestions()
         this.timer.start();
         this.answerTimer.start();
     }
 
-    loadQuestions = () =>{
-        Object.keys(jsonFile).forEach( (e) => {
-            if (isNaN(parseInt(e))) return;
-            let q = jsonFile[parseInt(e)];
-            this.questions.push(new Question(q.id, q.question, q.answer));
-        })
-
-        // Initialize empty answers for each question
-        this.questions.forEach( e => this.answers.push(new Answer(e.id)))
-        this.totalQuestions = this.questions.length;
+    setTimeNode(node: HTMLElement): void {
+        this.timer.setHtmlElement(node);
     }
 
-    addAnswer = (userAnswer: number) =>{
-        this.answers[this.currentQuestionIndex].answer = userAnswer;
+    getTotalQuestions(): number {
+        return this.totalQuestions;
     }
 
-    getQuestionById = (id: number) => {
-        return "sdfsd"
-    }
-
-    getQuestion = () => {
-        
-        return this.questions[this.currentQuestionIndex];
-    }
-
-    getUserAnswer = () => {
-        return this.answers[this.currentQuestionIndex].answer;
+    getQuestion = (index: number) => {
+        return this.questions[index];
     }
 
     nextQuestion = () => {
         if(this.currentQuestionIndex + 1 < this.totalQuestions) {
-            this.calculateAnswerTime();
+            this._calculateAnswerTime();
             this.currentQuestionIndex++;
-            this.startCountingAnswerTime();
+            this._startCountingAnswerTime();
         }
             
-        return this.getQuestion();
+        return this.getQuestion(this.currentQuestionIndex);
     }
 
     previousQuestion = () => {
         if(this.currentQuestionIndex - 1 >= 0){
-            this.calculateAnswerTime();
+            this._calculateAnswerTime();
             this.currentQuestionIndex--;
-            this.startCountingAnswerTime();
+            this._startCountingAnswerTime();
         }
-        return this.getQuestion();
+        return this.getQuestion(this.currentQuestionIndex);
+    }
+
+    getCurrentAnswer(): number {
+        return this.answers[this.currentQuestionIndex].answer;
+    }
+
+    addAnswer = (userAnswer: number) =>{
+        this.answers[this.currentQuestionIndex].answer = userAnswer;
     }
 
     isQuizReady() {
@@ -77,31 +74,35 @@ export class Quiz implements QuizControler{
         return true;
     }
 
-    startCountingAnswerTime = () => {
+    finishQuiz(): void {
+        this.timer.stop();
+        this._calculateAnswerTime();
+        let points = this._calculatePoints();
+        let score = new Score(points, this.questions, this.answers, this.timer.getTimeInSeconds());
+        this.scoreRepository.saveScore(score);
+    }
+
+    _loadQuestions = () =>{
+        this.questions = this.questionRepository.getAllQuestions();
+        this.questions.forEach(e => this.answers.push(new Answer(e.id)))
+        this.totalQuestions = this.questions.length;
+    }
+
+    _startCountingAnswerTime = () => {
         this.answerTimer.start();
     }
 
-    calculateAnswerTime = () => {
+    _calculateAnswerTime = () => {
         this.answerTimer.stop();
-        this.answers[this.currentQuestionIndex].timeInSeconds += this.answerTimer.timeInSeconds;
+        this.answers[this.currentQuestionIndex].timeInSeconds += this.answerTimer.getTimeInSeconds();
         this.answerTimer.reset();
     }
 
-    getFinalScore = () => {
-        this.timer.stop();
-        this.calculateAnswerTime();
-        let points = this.calculatePoints();
-        return new Score(points, this.questions, this.answers, this.timer.timeInSeconds);
-    }
-
-    calculatePoints = () => {
+    _calculatePoints = () => {
         var points = 0;
         for( let i=0; i<this.totalQuestions; i++){
             if (this.questions[i].checkAnswer(this.answers[i].answer)) points++;
         }
         return points;
     }
-
 }
-
-

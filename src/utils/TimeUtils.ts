@@ -1,5 +1,6 @@
 
-     function getMinutesPart(timeInSeconds: number): number{
+export module Utils{
+    function getMinutesPart(timeInSeconds: number): number{
         return Math.trunc(timeInSeconds / 60);
     }
     
@@ -7,8 +8,10 @@
         return timeInSeconds % 60;
     }
     
-    export function getTime(timeInSeconds: number): string{
+    export function getTimeAsString(timeInSeconds: number): string{
         return `${getMinutesPart(timeInSeconds)} min ${getSecondsPart(timeInSeconds)} s`;
     }    
+}
+    
 
 

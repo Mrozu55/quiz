@@ -1,9 +1,9 @@
 import { Question } from './Question'
-import * as jsonFile from '../files/questions.json'
+import * as jsonFile from '../../../files/questions.json'
 import { Answer } from './Answer';
-import { TimeCounter } from './TimeCounter';
+import { TimeCounter } from '../TimeCounter';
 import { Score } from './Score';
-import { QuizControler } from '../interfaces/QuizControler';
+import { QuizControler } from '../ports/QuizController';
 
 
 export class Quiz implements QuizControler{

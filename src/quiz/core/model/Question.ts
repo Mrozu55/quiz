@@ -1,4 +1,4 @@
-import { Validator } from '../interfaces/Validator'
+import { Validator } from '../../../interfaces/Validator'
 
 
 export class Question implements Validator{

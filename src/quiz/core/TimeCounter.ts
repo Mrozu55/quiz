@@ -1,4 +1,4 @@
-import { getTime } from "./Utils";
+import { getTime } from "../../utils/TimeUtils";
 
 
 export class TimeCounter{
@@ -25,12 +25,18 @@ export class TimeCounter{
     }
 
     stop = () => {
+        console.log(this.timeInSeconds);
         clearInterval(this.clock);
+        console.log(this.timeInSeconds);
+        
         this.isRunning = false;
     }
 
-    reset = () => {        
+    reset = () => {      
+        console.log("reset");
+        console.log("before: " + this.timeInSeconds);
         this.timeInSeconds = 0;
+        console.log("after: " + this.timeInSeconds);
     }
 
     getTimeAsString = () => {

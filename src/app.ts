@@ -1,6 +1,6 @@
-import { Answer } from './classes/Answer';
-import { Question } from './classes/Question';
-import { Quiz } from './classes/Quiz'
+import { Answer } from './quiz/core/model/Answer';
+import { Question } from './quiz/core/model/Question';
+import { Quiz } from './quiz/core/model/Quiz'
 
 
 /* HTML DOM objects */

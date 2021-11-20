@@ -1,6 +1,6 @@
 import { Answer } from "./Answer";
 import { Question } from "./Question";
-import { getTime } from "./Utils";
+import { getTime } from "../../../utils/TimeUtils";
 
 export class Score{    
     constructor(

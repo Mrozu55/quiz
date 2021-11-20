@@ -3,9 +3,10 @@ import * as jsonFile from '../files/questions.json'
 import { Answer } from './Answer';
 import { TimeCounter } from './TimeCounter';
 import { Score } from './Score';
+import { QuizControler } from '../interfaces/QuizControler';
 
 
-export class Quiz {
+export class Quiz implements QuizControler{
     private questions: Question[] = new Array();
     private answers: Answer[] = new Array();
     private timer: TimeCounter = new TimeCounter();
@@ -14,7 +15,7 @@ export class Quiz {
     public currentQuestionIndex: number = 0;
     public totalQuestions: number = 0;
 
-    init = (timerNode?: HTMLSelectElement) => {
+    init = (timerNode?: HTMLElement) => {
         this.loadQuestions()
         if (timerNode) this.timer.setDOMElement(timerNode);
         this.timer.start();
@@ -35,6 +36,10 @@ export class Quiz {
 
     addAnswer = (userAnswer: number) =>{
         this.answers[this.currentQuestionIndex].answer = userAnswer;
+    }
+
+    getQuestionById = (id: number) => {
+        return "sdfsd"
     }
 
     getQuestion = () => {

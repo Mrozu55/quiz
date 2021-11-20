@@ -5,7 +5,7 @@ export class TimeCounter{
     public timeInSeconds: number = 0;
     public isRunning: boolean = false;
     private clock: number = 0;
-    private timerNode: HTMLSelectElement | undefined;
+    private timerNode: HTMLElement | undefined;
 
     start = () => {
         this.isRunning = true;
@@ -15,7 +15,7 @@ export class TimeCounter{
         }, 1000)
     }
 
-    setDOMElement = (timerNode:HTMLSelectElement) => {
+    setDOMElement = (timerNode:HTMLElement) => {
         this.timerNode = timerNode;
     }
 

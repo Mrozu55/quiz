@@ -60,10 +60,7 @@ function onNext(){
 }
 
 function onFinish() {
-    console.log(quiz.getFinalScore());
-    
-    //window.open("summary.html", "_self");
-    
+    window.open("summary.html", "_self");
 }
 
 function onAnswerTyped(){

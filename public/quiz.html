@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz algebraiczny</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="accent2 regular-btn">
+          Anuluj 
+        </div>
+        <div class="introduction">
+          <span> Quiz algebraiczny </span>
+          <p> Każda poprawna odpowiedź to 1 punkt. </p>
+          <p> Aby zakończyć quiz należy odpowiedzieć na wszystkie pytania. </p>
+          <p> Anulowanie powraca do strony startowej bez zapisywania wyniku. </p>
+        </div>
+        <!-- <a href="summary.html" id="finish-quiz" class="regular-btn disabled">
+          Zakończ 
+        </a> -->
+        <div id="finish-quiz" class="regular-btn disabled">
+          Zakończ 
+        </div>
+      </nav>
+
+      <section class="quiz cart">
+        <p id="question-id"> Pytanie </p>
+        <div id="question"> 2 + 2</div>
+
+        <div class="answer-block">
+          <p> Odpowiedź </p>
+          <input type="number" class="nr-input" id="answer" tabindex="1"/>
+        </div>
+
+        <div class="navigation-keys">
+          <div id="previous-question" class="accent regular-btn" tabindex="3">
+            Cofnij 
+          </div>
+          <div id="next-question" class="accent regular-btn" tabindex="2">
+            Dalej 
+          </div>
+        </div>
+      </section>
+
+
+      <footer> <p id="timer"> time </p> </footer>
+    </div>
+    <script src="../src/app.ts"></script>
+  </body>
+</html>

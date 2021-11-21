@@ -9,7 +9,9 @@ I've used `clean architecture` principles to separate business logic from any de
 
 
 ## How to run
-Run this command inside terminal
-`npx parcel .\public\index.html`
+Use command `npm install` to install all dependencies.
+
+next run server using
+`npx parcel .\public\index.html` command.
 
 and then open this `http://localhost:1234` link.

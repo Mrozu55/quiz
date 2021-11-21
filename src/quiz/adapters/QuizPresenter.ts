@@ -11,6 +11,7 @@ export module QuizPresenter{
     const previousQuestionButton: HTMLButtonElement = document.querySelector("#previous-question")! as HTMLButtonElement;
     const nextQuestionButton: HTMLButtonElement = document.querySelector("#next-question")! as HTMLButtonElement;
     const finishQuizButton: HTMLButtonElement = document.querySelector("#finish-quiz")! as HTMLButtonElement;
+    const cancelQuizButton: HTMLButtonElement = document.querySelector("#cancel-quiz")! as HTMLButtonElement;
     const timerNode: HTMLSelectElement = document.querySelector("#timer")! as HTMLSelectElement;
 
     /* Listeners */
@@ -18,22 +19,25 @@ export module QuizPresenter{
     previousQuestionButton.addEventListener("click", onPrevious);
     nextQuestionButton.addEventListener("click", onNext);
     finishQuizButton.addEventListener("click", onFinish);
+    cancelQuizButton.addEventListener("click", onCancel);
 
     /* variables */
     let disbaledClassName: string = "disabled";
     let activeClassName: string = "accent"; 
+    let totalQuestinos: number = 0;
 
     /* Quiz */
     let quiz: QuizController = QuizConfiguration.createQuizController();
     quiz.setTimeNode(timerNode)
     quiz.init();
-    displayQuestion(quiz.getQuestion(0));
+    totalQuestinos = quiz.getTotalQuestions();
+    displayQuestion(quiz.getCurrentIndex(), quiz.getQuestion(0));
 
 
     // Functions
-    function displayQuestion(question: Question){
-        showQuestionNumber(question.id, quiz.getTotalQuestions());
-        showQuestion(question.question)
+    function displayQuestion(index:number, question: string){
+        showQuestionNumber(index, totalQuestinos);
+        showQuestion(question)
         showUserAnswer(quiz.getCurrentAnswer())
     }
     
@@ -51,17 +55,27 @@ export module QuizPresenter{
     
     function onPrevious(){
         let question = quiz.previousQuestion();
-        displayQuestion(question);
+        let index = quiz.getCurrentIndex();
+        displayQuestion(index, question);
+        index === 1? setDisabled(previousQuestionButton) : setActive(previousQuestionButton);
+        setActive(nextQuestionButton);
     }
     
     function onNext(){
         let question = quiz.nextQuestion();
-        displayQuestion(question);
+        let index = quiz.getCurrentIndex();
+        displayQuestion(index, question);
+        index === totalQuestinos? setDisabled(nextQuestionButton) : setActive(nextQuestionButton);
+        setActive(previousQuestionButton);
     }
     
     function onFinish() {
         quiz.finishQuiz();
-        window.open("summary.html", "_self");
+    }
+
+    function onCancel() {
+        console.log("cancel");
+        
     }
     
     function onAnswerTyped(){
@@ -79,3 +93,5 @@ export module QuizPresenter{
         button.classList.remove(disbaledClassName);
     }
 }
+
+

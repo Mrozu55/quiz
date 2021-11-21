@@ -1,15 +1,12 @@
-import { Validator } from '../../../interfaces/Validator'
 
-
-export class Question implements Validator{
+export class Question{
   constructor(
     readonly id: number,
     readonly question: string,
     private answer: number,
   ) {}
 
-  checkAnswer = (userAnswer: number) => {
+  checkAnswer(userAnswer: number): boolean{
     return userAnswer === this.answer;
   }
-
 }

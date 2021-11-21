@@ -1,5 +1,5 @@
 
-export module Utils{
+export module TimeUtils{
     function getMinutesPart(timeInSeconds: number): number{
         return Math.trunc(timeInSeconds / 60);
     }

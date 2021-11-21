@@ -13,21 +13,18 @@
   <body>
     <div class="container">
       <nav>
-        <div class="accent2 regular-btn">
+        <a href="index.html" id="cancel-quiz" class="accent2 regular-btn">
           Anuluj 
-        </div>
+        </a>
         <div class="introduction">
           <span> Quiz algebraiczny </span>
           <p> Każda poprawna odpowiedź to 1 punkt. </p>
           <p> Aby zakończyć quiz należy odpowiedzieć na wszystkie pytania. </p>
           <p> Anulowanie powraca do strony startowej bez zapisywania wyniku. </p>
         </div>
-        <!-- <a href="summary.html" id="finish-quiz" class="regular-btn disabled">
+        <a href="summary.html" id="finish-quiz" class="regular-btn disabled">
           Zakończ 
-        </a> -->
-        <div id="finish-quiz" class="regular-btn disabled">
-          Zakończ 
-        </div>
+        </a>
       </nav>
 
       <section class="quiz cart">
@@ -40,7 +37,7 @@
         </div>
 
         <div class="navigation-keys">
-          <div id="previous-question" class="accent regular-btn" tabindex="3">
+          <div id="previous-question" class="disabled regular-btn" tabindex="3">
             Cofnij 
           </div>
           <div id="next-question" class="accent regular-btn" tabindex="2">
@@ -50,7 +47,7 @@
       </section>
 
 
-      <footer> <p id="timer"> time </p> </footer>
+      <footer> <p id="timer"> 0 min 0 s </p> </footer>
     </div>
     <script src="../src/quiz/adapters/QuizPresenter.ts"></script>
   </body>

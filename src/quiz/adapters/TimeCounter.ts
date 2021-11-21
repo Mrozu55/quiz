@@ -1,5 +1,5 @@
 import { Timer } from "../core/ports/Timer";
-import { Utils } from "../../utils/TimeUtils"
+import { TimeUtils } from "../../utils/TimeUtils"
 
 export class TimeCounter implements Timer{
     
@@ -35,6 +35,6 @@ export class TimeCounter implements Timer{
 
     _updateTimerNode = () => {
         if(this.timerNode != undefined)
-            this.timerNode.textContent = Utils.getTimeAsString(this.timeInSeconds);
+            this.timerNode.textContent = TimeUtils.getTimeAsString(this.timeInSeconds);
     }
   }

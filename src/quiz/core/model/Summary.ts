@@ -1,5 +1,6 @@
 import { ScoreRepository } from "../ports/ScoreRepository";
 import { SummaryController } from "../ports/SummaryController";
+import { NotFoundError } from "./NotFoundError";
 import { Score } from "./Score";
 
 export class Summary implements SummaryController {
@@ -10,7 +11,7 @@ export class Summary implements SummaryController {
     getFinalScore(): Score{
         let score = this.scoreRepository.getLastScore();
         if (score === null)
-            throw new Error("Score not found.");
+            throw new NotFoundError("Score not found.");
         else
             return score;
     }

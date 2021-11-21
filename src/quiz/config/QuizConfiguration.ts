@@ -15,7 +15,8 @@ export class QuizConfiguration{
             this.#getDefaultTimer(),
             this.#getDefaultTimer(),
             this.#getQuestionRepository(),
-            this.#getScoreRepository()
+            this.#getScoreRepository(),
+            this.#getPointsForCorrectAnswer()
             );
     }
 
@@ -33,5 +34,9 @@ export class QuizConfiguration{
 
     static #getScoreRepository(): ScoreRepository{
         return new LocalStorage();
+    }
+
+    static #getPointsForCorrectAnswer(): number{
+        return 1;
     }
 }

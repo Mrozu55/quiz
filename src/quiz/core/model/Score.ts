@@ -1,17 +1,10 @@
-import { Utils } from "../../../utils/TimeUtils";
-import { Answer } from "./Answer";
-import { Question } from "./Question";
+import { ScoreDetails } from "./ScoreDetails";
 
 export class Score{    
     constructor(
-      public points: number,
-      public questions: Question[],
-      public userAnswers: Answer[],
-      public totalTimeInSeconds: number 
+      readonly points: number,
+      readonly totalTimeInSeconds: number,
+      readonly details: ScoreDetails[]
     ) {}  
-
-    getTimeAsString = () => {
-        return Utils.getTimeAsString(this.totalTimeInSeconds);
-    }
   }
   

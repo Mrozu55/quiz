@@ -13,42 +13,27 @@
   <body>
     <div class="container">
       <nav>
-        <div class="accent regular-btn">
-          Powrót 
-        </div>
+        <a href="index.html" id="back-to-start" class="accent regular-btn">
+            Powrót 
+        </a>
         <div class="introduction">
           <span> Podsumowanie </span>
-          <h3> Wynik </h3>
-          <h3> Łączny czas </h3>
+          <h3 class="main-score"> Wynik: <span id="total-points">0</span> </h3>
+          <h3 class="main-score"> Łączny czas: <span id="total-time">0 min 0 s</span> </h3>
         </div>
         <div class="regular-btn hide"> </div>
       </nav>
 
       <section class="cart">
-       <table class="details-table" cellspacing="0" cellpadding="0">
+       <table  class="details-table" cellspacing="0" cellpadding="0">
         <thead>
             <th>#</th>
             <th>Pytanie</th>
-            <th>Poprawna </br> odpowiedź</th>
+            <th>Twoja </br> odpowiedź</th>
             <th>Czas</th>
             <th>Punkty</th>
         </thead>
-        <tbody>
-         <!-- delete -->
-         <tr>
-            <td>1</td>
-            <td>2 + 2</td>
-            <td>4</td>
-            <td>8s</td>
-            <td>1</td>
-         </tr>
-         <tr>
-            <td>2</td>
-            <td>2 - 2</td>
-            <td>0</td>
-            <td>3s</td>
-            <td>0</td>
-         </tr>
+        <tbody id="tbody-details">
         </tbody>
        </table>
       </section>
@@ -56,6 +41,6 @@
 
       <footer>  </footer>
     </div>
-    <script src="../src/app.ts"></script>
+    <script src="../src/quiz/adapters/SummaryPresenter.ts"></script>
   </body>
 </html>

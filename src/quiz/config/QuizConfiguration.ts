@@ -13,7 +13,6 @@ export class QuizConfiguration{
     static createQuizController(): QuizController{
         return new Quiz(
             this.#getDefaultTimer(),
-            this.#getDefaultTimer(),
             this.#getQuestionRepository(),
             this.#getScoreRepository(),
             this.#getPointsForCorrectAnswer()

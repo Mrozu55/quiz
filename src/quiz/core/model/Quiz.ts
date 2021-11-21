@@ -14,10 +14,10 @@ export class Quiz implements QuizController{
     private answers: Answer[] = new Array();
     private currentQuestionIndex: number = 0;
     private totalQuestions: number = 0;
+    private answerTime: number = 0;
 
     constructor(
        private timer: Timer,
-       private answerTimer: Timer,
        private questionRepository: QuestionRepository,
        private scoreRepository: ScoreRepository,
        private correctAnswerValue: number
@@ -26,7 +26,6 @@ export class Quiz implements QuizController{
     init = () => {
         this.#loadQuestions()
         this.timer.start();
-        this.answerTimer.start();
     }
 
     setTimeNode(node: HTMLElement): void {
@@ -84,7 +83,11 @@ export class Quiz implements QuizController{
         this.#calculateAnswerTime();
         let points = this.#calculatePoints();
         let details = this.#getScoreDetails();
-        let score = new Score(points, this.timer.getTimeInSeconds(), details);
+        let score = new Score(
+            this.correctAnswerValue * this.totalQuestions,
+            points,
+            this.timer.getTimeInSeconds(), 
+            details);
         this.scoreRepository.saveScore(score);
     }
 
@@ -98,8 +101,8 @@ export class Quiz implements QuizController{
                 new ScoreDetails(
                     question, 
                     answer, 
-                    isCorrect? this.correctAnswerValue : 0,
-                    isCorrect));
+                    isCorrect? this.correctAnswerValue : 0
+                ));
         }
         return details;
     }
@@ -112,13 +115,12 @@ export class Quiz implements QuizController{
     }
 
     #startCountingAnswerTime = () => {
-        this.answerTimer.start();
+        this.answerTime = this.timer.getTimeInSeconds();
     }
 
     #calculateAnswerTime = () => {
-        this.answerTimer.stop();
-        this.answers[this.currentQuestionIndex].timeInSeconds += this.answerTimer.getTimeInSeconds();
-        this.answerTimer.reset();
+        let currentTime = this.timer.getTimeInSeconds();
+        this.answers[this.currentQuestionIndex].timeInSeconds += currentTime - this.answerTime;
     }
 
     #calculatePoints = () => {

@@ -1,4 +1,3 @@
-import { Question } from "../model/Question";
 
 export interface QuizController {
     init(): void;

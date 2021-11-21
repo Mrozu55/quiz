@@ -7,20 +7,16 @@ import { ScoreDetails } from "../core/model/ScoreDetails";
 export module SummaryPresenter{
 
     /* HTML DOM objects */
-    const backToStartButton: HTMLButtonElement = document.querySelector("#back-to-start")! as HTMLButtonElement;
     const totalPointsNode: HTMLSpanElement = document.querySelector("#total-points")! as HTMLSpanElement;
     const totalTimeNode: HTMLSpanElement = document.querySelector("#total-time")! as HTMLSpanElement;
     const detailsTable: HTMLTableElement = document.querySelector("#tbody-details")! as HTMLTableElement;
-    
-     /* Listeners */
-     backToStartButton.addEventListener("click", onBackClicked);
 
      /* Summary */
      let summary = QuizConfiguration.createSummaryController();
      var score: Score;
      try {
         score = summary.getFinalScore();
-        showTotalPoints(score.points, score.details.length);
+        showTotalPoints(score.userPoints, score.maxPoints);
         showTotalTime(TimeUtils.getTimeAsString(score.totalTimeInSeconds));
         showScoreDetails(score.details);
      } catch (error) {
@@ -28,10 +24,8 @@ export module SummaryPresenter{
      }
      
     function showNotFoundError(msg: string) {
-        console.log("Sorry, we couldn't find your score:");
         console.log(msg);
     }
-
 
     function showTotalPoints(points: number, total: number) {
         totalPointsNode.textContent = `${points} / ${total}`;
@@ -51,10 +45,6 @@ export module SummaryPresenter{
                 e.points
             );
         });
-    }
-
-    function onBackClicked() {
-        
     }
 
     function createTableRow(index: number, question: string, answer: number, time: number, points: number): void{

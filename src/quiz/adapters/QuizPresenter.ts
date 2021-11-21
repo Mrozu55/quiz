@@ -1,5 +1,4 @@
 import { QuizConfiguration } from "../config/QuizConfiguration";
-import { Question } from "../core/model/Question";
 import { QuizController } from "../core/ports/QuizController";
 
 export module QuizPresenter{
@@ -24,19 +23,19 @@ export module QuizPresenter{
     /* variables */
     let disbaledClassName: string = "disabled";
     let activeClassName: string = "accent"; 
-    let totalQuestinos: number = 0;
+    let totalQuestions: number = 0;
 
     /* Quiz */
     let quiz: QuizController = QuizConfiguration.createQuizController();
     quiz.setTimeNode(timerNode)
     quiz.init();
-    totalQuestinos = quiz.getTotalQuestions();
+    totalQuestions = quiz.getTotalQuestions();
     displayQuestion(quiz.getCurrentIndex(), quiz.getQuestion(0));
 
 
     // Functions
     function displayQuestion(index:number, question: string){
-        showQuestionNumber(index, totalQuestinos);
+        showQuestionNumber(index, totalQuestions);
         showQuestion(question)
         showUserAnswer(quiz.getCurrentAnswer())
     }
@@ -65,7 +64,7 @@ export module QuizPresenter{
         let question = quiz.nextQuestion();
         let index = quiz.getCurrentIndex();
         displayQuestion(index, question);
-        index === totalQuestinos? setDisabled(nextQuestionButton) : setActive(nextQuestionButton);
+        index === totalQuestions? setDisabled(nextQuestionButton) : setActive(nextQuestionButton);
         setActive(previousQuestionButton);
     }
     

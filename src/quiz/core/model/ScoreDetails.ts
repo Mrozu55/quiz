@@ -6,6 +6,5 @@ export class ScoreDetails{
         readonly question: Question,
         readonly answer: Answer,
         readonly points: number,
-        readonly isCorrect: boolean
     ){}
 }

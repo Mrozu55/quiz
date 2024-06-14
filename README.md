@@ -4,7 +4,6 @@ Simple quiz written in typescript as my college assignment.
 
 I've used `clean architecture` principles to separate business logic from any dependencies such as database or UI.
 
-
 ![Alt text](docs/flow.png?raw=true "Flow")
 
 
